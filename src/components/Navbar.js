@@ -6,16 +6,16 @@ import logo from "../assests/download.jpg"
 
 const Navbar = () => {
   return (
-    <div className=' bg-blue-500  h-[60px] m-0 p-0 '>
+    <div className=' bg-[#5964FF] h-[60px] m-0 p-0 '>
        
      <nav className='flex justify-center justify-around sticky '>
         <div className='text-4xl font-bold text-white font-mono '> 
-        <Link to='/home'>
+        <Link to='/'>
           <diV className='flex gap-5 items-center'>
-          <img src={logo} className='h-[50px] w-[50px] bg-none'/>
-          <span>OES</span>
-          </diV>
-          </Link></div>
+          <img src={logo} className='h-[50px] w-[50px] bg-none rounded-full mt-1'/>
+          <span>ExamHall</span>
+          </diV></Link>
+          </div>
 
         <div className='flex '>
             <ul className='flex  font-mono gap-[40px] text-white text-lg font-medium items-center p-3 '>
