@@ -5,7 +5,18 @@ import {  useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 
-const TeacherReg = (props) => {
+
+
+const StudentReg = (props) => {
+  const [gender,setGender]=useState("")
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleGender=(e)=>{
+    setGender(e.target.value)
+  }
+     const handleOptionChange = (event) => {
+      setSelectedOption(event.target.value);
+    };
 
   const isValidPassword = (password) => {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
@@ -51,6 +62,8 @@ const onSubmit=(data)=>{
 }
 
 
+
+
   return (
      <div >
     <section className=" w-[50%] ">
@@ -58,7 +71,7 @@ const onSubmit=(data)=>{
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0  dark:border-gray-300">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-              Teacher SignUp
+              Student SignUp
             </h1>
     
     <form
@@ -92,6 +105,7 @@ const onSubmit=(data)=>{
     >
       Your email
     </label>
+    
     <input
       type="email"
       id="email"
@@ -114,6 +128,8 @@ const onSubmit=(data)=>{
     </label>
     <input
       type="password"
+      
+      
       id="password"
       placeholder="••••••••"
       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
@@ -145,6 +161,52 @@ const onSubmit=(data)=>{
       </span>
     )}
   </div>
+  <div>
+    
+      <label
+            className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Gender
+              </label>
+      
+      <div className='flex justify-center gap-3'>
+      <input 
+      type='radio'
+      name='gender'
+      value='male'
+      onChange={handleGender}
+      />
+      Male
+
+      <input 
+      type='radio'
+      name='gender'
+      value='female'
+      onChange={handleGender}
+      />
+      Female
+      <input 
+      type='radio'
+      name='gender'
+      value='other'
+      onChange={handleGender}
+      />
+      other
+      </div>
+    </div>
+
+    <div>
+      <label htmlFor="dropdown" className='block mb-2 text-sm font-medium text-gray-900'>Faculty</label>
+      <select id="dropdown" value={selectedOption} onChange={handleOptionChange} 
+      className='"bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"'>
+        <option value="">--Please choose an option--</option>
+        <option value="bsccsit">BSC CSIT</option>
+        <option value="bca">BCA</option>
+        <option value="bim">Bcim</option>
+      </select>
+      
+    </div>
+
   <div className="flex items-start">
     <div className="flex items-center h-5">
       <input
@@ -155,6 +217,7 @@ const onSubmit=(data)=>{
         {...register("terms")}
       />
     </div>
+   
     <div className="ml-3 text-sm">
       <label
         htmlFor="terms"
@@ -192,4 +255,4 @@ const onSubmit=(data)=>{
   )
 }
 
-export default TeacherReg 
+export default StudentReg 
