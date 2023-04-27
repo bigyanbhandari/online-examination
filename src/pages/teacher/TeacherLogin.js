@@ -33,8 +33,18 @@ const TeacherLogin = (props) => {
     resolver: zodResolver(formSchema),
   });
   
-  const onSubmit=(data)=>{
-    console.log(data);
+  const onSubmit= async()=>{
+    let result = await fetch('localhost:8080/user/login',{
+      method:'post',
+      body:JSON.stringify(),
+      headers:
+      { 
+        'Content-Type':'application/json'
+      }
+    })
+    result=await result.json();
+    console.warn(result)
+     
     
   }
 
@@ -43,7 +53,7 @@ const TeacherLogin = (props) => {
 
   return (
     <div >
-      <section className=" w-[50%] ">
+      <section className="  ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

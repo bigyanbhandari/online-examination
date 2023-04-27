@@ -6,37 +6,7 @@ import "../sidebargroup/sidebarmenu.css"
 
 
 
-// const menuAnimation = {
-//   hidden: {
-//     opacity: 0,
-//     height: 0,
-//     padding: 0,
-//     transition: { duration: 0.3, when: "afterChildren" },
-//   },
-//   show: {
-//     opacity: 1,
-//     height: "auto",
-//     transition: {
-//       duration: 0.3,
-//       when: "beforeChildren",
-//     },
-//   },
-// };
-// const menuItemAnimation = {
-//   hidden: (i) => ({
-//     padding: 0,
-//     x: "-100%",
-//     transition: {
-//       duration: (i + 1) * 0.1,
-//     },
-//   }),
-//   show: (i) => ({
-//     x: 0,
-//     transition: {
-//       duration: (i + 1) * 0.1,
-//     },
-//   }),
-// };
+
 
 const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
