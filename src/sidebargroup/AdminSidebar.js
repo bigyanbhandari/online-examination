@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { FaBars,  FaChalkboardTeacher } from "react-icons/fa";
 import {HiUserGroup} from "react-icons/hi"
-import { AiTwotoneFileExclamation } from "react-icons/ai";
+import { AiOutlineDashboard} from "react-icons/ai";
 import {SlNotebook} from "react-icons/sl"
 import {TbLayoutDashboard} from "react-icons/tb"
 import {BsFillBuildingsFill } from "react-icons/bs"
@@ -12,54 +12,62 @@ import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import "../sidebargroup/sidebar.css"
 import adminlogo from "../assests/admin-logo.jpg"
-const routes = [
-
-  {
-    path: "/admindashboard",
-    
-    name: "Dashboard",
-    icon: <TbLayoutDashboard />,
-  },
-  {
-    path: "adminteacher",
-    name: "Teacher",
-    icon: <FaChalkboardTeacher />,
-  },
-  {
-    path: "adminstudent",
-    name: "Student",
-    icon: <HiUserGroup />,
-  },
-  {
-   
-    path: "adminfaculty",
-    name: "Faculty",
-    icon: <BsFillBuildingsFill />,
-  },
-  {
-   
-    path: "admincategories",
-    name: "Catagories",
-    icon: <MdOutlineCategory />,
-  },
-  {
-   
-    path: "admincourses",
-    name: "Courses",
-    icon: <SlNotebook />,
-  },
-  {
-    path: "/admin ",
-    name: "Logout",
-    icon: <BiLogOut size={20} />,
-  }
-];
+import LogoutModal from "../components/LogoutModal";
+import { useDisclosure } from "../hooks/useDisclosure";
 
 const Sidebar = ({ children }) => {
   
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const {isOpen : isOpenLogoutModal, onOpen: onOpenLogoutModal, onClose: onCloseLogoutModal} = useDisclosure();
 
+  const routes = [
+
+    {
+      path: "/admindashboard",
+      
+      name: "Dashboard",
+      icon: <AiOutlineDashboard />,
+    },
+    {
+      path: "adminteacher",
+      name: "Teacher",
+      icon: <FaChalkboardTeacher />,
+    },
+    {
+      path: "adminstudent",
+      name: "Student",
+      icon: <HiUserGroup />,
+    },
+    {
+     
+      path: "adminfaculty",
+      name: "Faculty",
+      icon: <BsFillBuildingsFill />,
+    },
+    {
+     
+      path: "admincategories",
+      name: "Catagories",
+      icon: <MdOutlineCategory />,
+    },
+    {
+     
+      path: "admincourses",
+      name: "Courses",
+      icon: <SlNotebook />,
+    },
+    {
+      // path: "/admin ",
+      icon: (
+        <div className="flex gap-4" onClick={onOpenLogoutModal} >
+          <BiLogOut size={20}   />
+          <span>Logout</span>
+        </div>
+      ),
+    }
+  ];
+  
 
   const showAnimation = {
     hidden: {
@@ -155,6 +163,13 @@ const Sidebar = ({ children }) => {
                 </NavLink>
               );
             })}
+            <LogoutModal
+                handleLogout={() => {
+                 window.log("logged out")
+                }}
+                isModalOpen={isOpenLogoutModal}
+                handleCancel={onCloseLogoutModal}
+            />
           </section>
         </motion.div>
 

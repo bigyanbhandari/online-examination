@@ -19,7 +19,7 @@ const Faqs = () => {
           },
       ]);
       
-      const [isOpenList, setIsOpenList] = useState(new Array(faqItems.length).fill(false));
+      const [isOpenList, setIsOpenList] = useState(new Array(faqItems?.length).fill(false));
       
       const handleClick = (index) => {
         setIsOpenList((prev) => {
