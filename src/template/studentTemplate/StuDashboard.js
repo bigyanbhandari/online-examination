@@ -12,7 +12,7 @@ const StuDashboard = () => {
         label="Total Exams Available"
         count="34"
         color="#dDf6E3"
-        width='600px'
+        width='500px'
       />
       <Card
       
@@ -20,7 +20,7 @@ const StuDashboard = () => {
         label="Total Questions"
         count="3"
         color="#dDf6E3"
-        width='600px'
+        width='500px'
       />
 </div>
     </div>

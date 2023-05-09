@@ -22,12 +22,16 @@ import AdminCourses from "./template/adminTemplate/AdminCourses";
 import Sidebar from "./sidebargroup/AdminSidebar";
 import AddTeacher from "./template/adminTemplate/admintempcontent/AddTeacher";
 
-
 import StudentSidebar from "./sidebargroup/StudentSidebar";
 import StudentDashboard from "./dashboard/StudentDashboard";
 import Exam from "./template/studentTemplate/Exam";
 import Marks from "./template/studentTemplate/Marks";
+
 import StuDashboard from "./template/studentTemplate/StuDashboard";
+import TeacherSidebar from "./sidebargroup/TeacherSidebar";
+import TeacherQuestions from "./template/teacherTemplate/TeacherQuestions";
+import TeacherExam from "./template/teacherTemplate/TeacherExam";
+import TeaDashboard from "./template/teacherTemplate/TeaDashboard";
 
 function App() {
   const Layout = () => {
@@ -57,6 +61,15 @@ function App() {
     );
   };
 
+  const LayoutTeacher = () => {
+    return (
+      <div className="flex">
+        <TeacherSidebar />
+        <Outlet />
+      </div>
+    );
+  };
+
   return (
     <div>
       <Router>
@@ -69,7 +82,6 @@ function App() {
             <Route path="/student" exact Component={Student} />
             <Route path="/contact" exact Component={Contact} />
           </Route>
-
 
           <Route path="/admindashboard" element={<LayoutAdmin />}>
             <Route path="/admindashboard" exact Component={AdminDashboard} />
@@ -84,17 +96,27 @@ function App() {
             <Route path="adminteacher/addteacher" Component={AddTeacher} />
           </Route>
 
-
           <Route path="/studentdashboard" element={<LayoutStudent />}>
-            <Route path="/studentdashboard" exact Component={StudentDashboard}/>
+            <Route
+              path="/studentdashboard"
+              exact
+              Component={StudentDashboard}
+            />
             <Route path="exam" Component={Exam} />
             <Route path="marks" Component={Marks} />
             <Route path="studashboard" Component={StuDashboard} />
           </Route>
 
-
-
-        <Route path="/teacherdashboard" exact Component={TeacherDashboard} />
+          <Route path="/teacherdashboard" element={<LayoutTeacher />}>
+            <Route
+              path="/teacherdashboard"
+              exact
+              Component={TeacherDashboard}
+            />
+            <Route path="teacherquestions" Component={TeacherQuestions} />
+            <Route path="teacherexam" Component={TeacherExam} />
+            <Route path="teadashboard" Component={TeaDashboard} />
+          </Route>
         </Routes>
       </Router>
     </div>

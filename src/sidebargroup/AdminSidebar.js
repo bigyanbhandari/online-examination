@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars,  FaChalkboardTeacher } from "react-icons/fa";
 import {HiUserGroup} from "react-icons/hi"
 import { AiOutlineDashboard} from "react-icons/ai";
@@ -15,12 +15,19 @@ import adminlogo from "../assests/admin-logo.jpg"
 import LogoutModal from "../components/LogoutModal";
 import { useDisclosure } from "../hooks/useDisclosure";
 
+
 const Sidebar = ({ children }) => {
-  
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const {isOpen : isOpenLogoutModal, onOpen: onOpenLogoutModal, onClose: onCloseLogoutModal} = useDisclosure();
 
+  const handleLogout = () => {
+    // local storage clear
+    localStorage.clear('admin-info')
+    navigate('/admin')
+    // navigate login page
+  }
   const routes = [
 
     {
@@ -164,9 +171,7 @@ const Sidebar = ({ children }) => {
               );
             })}
             <LogoutModal
-                handleLogout={() => {
-                 window.log("logged out")
-                }}
+                handleLogout={handleLogout}
                 isModalOpen={isOpenLogoutModal}
                 handleCancel={onCloseLogoutModal}
             />

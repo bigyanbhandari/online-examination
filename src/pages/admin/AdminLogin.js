@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const isValidPassword = (password) => {
@@ -35,8 +35,36 @@ const AdminLogin = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+   
+    Login(data).then(
+    navigate("/admindashboard")
+    )
   };
+
+  const[userEmail,setUserEmail]=useState("");
+  const [userPassword,setUserPassword]=useState("");
+
+  const navigate=useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("admin-info")) {
+      navigate("/admindashboard");
+    }
+  }, []);
+  const Login= async(data)=>{
+    let item= {userEmail: data.email,userPassword: data.password};
+    let result= await fetch('http://localhost:9595/user/login',{
+      method:'POST',
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":'application/json',
+        mode: 'no-cors'
+      },
+      body:JSON.stringify(item)
+    })
+    result=await result.json();
+    localStorage.setItem("admin-info",JSON.stringify(result))
+  }
 
   return (
     <div>
@@ -60,8 +88,8 @@ const AdminLogin = () => {
                       Your email
                     </label>
                     <input
+                      onChange={(e)=>setUserEmail(e.target.value)}
                       type="email"
-                     
                       id="email"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                       placeholder="name@company.com"
@@ -81,6 +109,7 @@ const AdminLogin = () => {
                       Password
                     </label>
                     <input
+                    onChange={(e)=>setUserPassword(e.target.value)}
                       type="password"
                       id="password"
                       placeholder="••••••••"
@@ -119,16 +148,16 @@ const AdminLogin = () => {
                     </span>
                   )}
                   <div>
-                  <Link to="/admindashboard" >
-                    {" "}
-                    <button
-                      type="submit"
-                      className="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                      disabled={isSubmitting}
-                    >
-                      Login
-                    </button>
-                  </Link>
+                    
+                      
+                      <button
+                        type="submit"
+                        className="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                        disabled={isSubmitting}
+                      >
+                        Login
+                      </button>
+                    
                   </div>
                 </form>
               </div>

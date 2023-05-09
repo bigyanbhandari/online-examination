@@ -1,17 +1,19 @@
 import { NavLink } from "react-router-dom";
 import { FaBars,  FaChalkboardTeacher } from "react-icons/fa";
 import {HiUserGroup} from "react-icons/hi"
-import { AiTwotoneFileExclamation } from "react-icons/ai";
-import {SlNotebook} from "react-icons/sl"
+
+import {BsQuestionCircleFill } from "react-icons/bs"
 import {AiOutlineDashboard } from "react-icons/ai"
 import {BsFillBuildingsFill } from "react-icons/bs"
-import {MdOutlineCategory} from "react-icons/md"
+import {GiNotebook } from "react-icons/gi"
 import {BiLogOut} from "react-icons/bi"
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import "../sidebargroup/sidebar.css"
 import teacherlogo from "../assests/teacher-logo.png"
+import LogoutModal from "../components/LogoutModal";
+import { useDisclosure } from "../hooks/useDisclosure";
 
 const routes = [
 
@@ -23,27 +25,17 @@ const routes = [
   },
   {
     // path: "/adminstudent",
-    name: "Student",
+    name: "Questions",
     icon: <HiUserGroup />,
   },
   {
    
     // path: "/adminfaculty",
-    name: "Faculty",
+    name: "Exams",
     icon: <BsFillBuildingsFill />,
   },
-  {
-   
-    // path: "/admincategories",
-    name: "Catagories",
-    icon: <MdOutlineCategory />,
-  },
-  {
-   
-    // path: "/admincourses",
-    name: "Courses",
-    icon: <SlNotebook />,
-  },
+  
+ 
   {
     path: "/teacher ",
     name: "Logout",
@@ -55,7 +47,38 @@ const TeacherSidebar = ({ children }) => {
   
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const {isOpen : isOpenLogoutModal, onOpen: onOpenLogoutModal, onClose: onCloseLogoutModal} = useDisclosure();
 
+  const routes = [
+
+ 
+    {
+      path: "/teacherdashboard",
+      name: "Dashboard",
+      icon: <AiOutlineDashboard  />,
+    },
+    {
+      path: "teacherquestions",
+      name: "Questions",
+      icon: <BsQuestionCircleFill />,
+    },
+    {
+     
+      path: "teacherexam",
+      name: "Exam",
+      icon: <GiNotebook />,
+    },
+    
+   
+    {
+      icon: (
+        <div className="flex gap-4" onClick={onOpenLogoutModal} >
+          <BiLogOut size={20}   />
+          <span>Logout</span>
+        </div>
+      ),
+    }
+  ];
 
   const showAnimation = {
     hidden: {
@@ -151,6 +174,14 @@ const TeacherSidebar = ({ children }) => {
                 </NavLink>
               );
             })}
+
+<LogoutModal
+                handleLogout={() => {
+                  console.log('logout clicked')
+                }}
+                isModalOpen={isOpenLogoutModal}
+                handleCancel={onCloseLogoutModal}
+            />
           </section>
         </motion.div>
 
