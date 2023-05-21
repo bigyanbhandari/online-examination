@@ -8,6 +8,7 @@ import PhoneInput from "react-phone-number-input";
 
 const TeacherReg = (props) => {
   const [value, setValue] = useState();
+  
 
   const isValidPassword = (password) => {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
@@ -24,7 +25,8 @@ const TeacherReg = (props) => {
         
       email: z.string().email("Invalid email").min(1, "Email is required"),
       gender: z.string({ invalid_type_error: "Please select a gender." }),
-      dob:z.string().min(8, 'Date of Birth Required'),
+      dob:z.string().min(8, 'enter your DOB'),
+      phonenumber:z.string().min(10,"phonenumber atleast 10 char"),
      
       password: z
         .string()
@@ -54,7 +56,11 @@ const TeacherReg = (props) => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    const output = {
+      ...data,
+      type: "Teacher"
+    }
+    console.log(output);
   };
 
   return (
@@ -125,8 +131,14 @@ const TeacherReg = (props) => {
                     placeholder="Enter phone number"
                     value={value}
                     onChange={setValue}
+                    {...register("phonenumber")}
                    
                   />
+                  {errors.phonenumber &&(
+                    <span className="text-red-800 block mt-2">
+                      {errors.phonenumber?.message}
+                    </span>
+                  )}
                 </div>
                
 
@@ -230,6 +242,9 @@ const TeacherReg = (props) => {
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                       {...register("terms")}
                     />
+                  </div>
+                  <div>
+                  <input {...register("hidden", { value: "data" })} type="hidden" />
                   </div>
                   <div className="ml-3 text-sm">
                     <label htmlFor="terms" className="font-medium">

@@ -1,5 +1,6 @@
 import React from 'react'
 import TeacherSidebar from "../sidebargroup/TeacherSidebar"
+import TeaDashboard from '../template/teacherTemplate/TeaDashboard'
 
 
 
@@ -10,11 +11,12 @@ const TeacherDashboard = () => {
   return (
     <div>
     <div className='text-5xl font-semibold ml-[300px]'>
-    WElcome teacher
+    Welcome teacher
     </div>
     <div className='flex ml-[40px] '>
-      <TeacherSidebar/>
-      </div>
+    <TeaDashboard/>
+    </div>
+     
       </div>
   )
 }
