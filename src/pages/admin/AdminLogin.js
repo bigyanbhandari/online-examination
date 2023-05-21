@@ -48,7 +48,7 @@ const AdminLogin = () => {
 
   useEffect(() => {
     if (localStorage.getItem("admin-info")) {
-      navigate("/admindashboard");
+      navigate("/admindashboard")
     }
   }, []);
   const Login= async(data)=>{
