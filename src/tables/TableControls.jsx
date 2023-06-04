@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { IconSearch } from '@tabler/icons';
-import { useDebounced } from '../../hooks';
+import { useDebounced } from '../hooks';
 
 import Filter from './Filter';
 import FilterPreview from './FilterPreview';
-import { Select } from '../inputs';
+import { Select } from '../input';
 
 const TableControls = ({ globalFilter, placeholder, onQueryChange, filterGroups, limit, onLimitChange }) => {
   const [filter, setFilter] = useState(globalFilter || '');
