@@ -21,12 +21,12 @@ const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const {isOpen : isOpenLogoutModal, onOpen: onOpenLogoutModal, onClose: onCloseLogoutModal} = useDisclosure();
-
+   
+  const storedData= localStorage.getItem('users');
   const handleLogout = () => {
-    // local storage clear
-    localStorage.clear('admin-info')
+    localStorage.clear(storedData)
     navigate('/admin')
-    // navigate login page
+    
   }
   const routes = [
 

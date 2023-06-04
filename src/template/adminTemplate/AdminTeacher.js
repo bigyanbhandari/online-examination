@@ -16,7 +16,7 @@ const handleClick =()=>{
 }
   return (
     <div >
-   <Card  icon={<FiUser  size={30}/>} label="Add Teacher" count="139" color="#FDF6E3"  pic={<AiOutlinePlusSquare size={50}  className=' ml-[100px] cursor-pointer '  onClick={handleClick}/>}/> 
+   <Card  icon={<FiUser  size={30}/>} label="Total Teacher" count="139" color="#FDF6E3"  pic={<AiOutlinePlusSquare size={50}  className=' ml-[100px] cursor-pointer '  onClick={handleClick}/>}/> 
    
      
      
