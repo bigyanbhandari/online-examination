@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
-import { Checkbox, PlainButton } from '../inputs';
+import { Checkbox, PlainButton } from '../input';
 
 import { IconFilter } from '@tabler/icons';
 

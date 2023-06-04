@@ -9,7 +9,7 @@ const request = async (method, url, includeAuth, params = {}) => {
   };
 
   if (includeAuth) {
-    req.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    req.headers.Authorization =localStorage.getItem('token');
     req.headers={
       ...req.headers,
       'x-user':localStorage.getItem('roleId'),

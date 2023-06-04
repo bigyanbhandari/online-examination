@@ -36,6 +36,7 @@ const navigate=useNavigate();
    teacherLogin(payload)
    .then(data => {
     if (data.status === "200") {
+      localStorage.setItem('token', data.JwtToken);
       navigate("/teacherdashboard");
     }
   })
