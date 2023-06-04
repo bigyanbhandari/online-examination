@@ -1,7 +1,8 @@
 import React from 'react'
 import { ColumnsType } from 'antd/es/table'
 
- export const useColumn = () => {
+ export const useColumns = () => {
+
   
   const columns=[
     {
@@ -12,33 +13,48 @@ import { ColumnsType } from 'antd/es/table'
 			},
 		},
 		{
-			title: 'Name',
-			dataIndex: 'name',
-			render: (name) => {
-				return <div>{name}</div>;
+			title: ' Name',
+			dataIndex: 'userName',
+			render: (userName) => {
+				return <div>{userName}</div>;
 			},
 		},
 		{
-			title: 'Email',
-			dataIndex: 'email',
-			render: (email) => {
-				return <div>{email}</div>;
+			title: ' Email',
+			dataIndex: 'userEmail',
+			render: (userEmail) => {
+				return <div>{userEmail}</div>;
 			},
 		},
 		{
-			title: 'Address',
-			dataIndex: 'address',
-			render: (address) => {
-				return <div>{address}</div>;
+			title: 'Contact Number',
+			dataIndex: 'userContactNumber',
+			render: (userContactNumber) => {
+				return <div>{userContactNumber}</div>;
 			},
 		},
 		{
-			title: 'Vat Number',
-			dataIndex: 'vat_number',
-			render: (vat_number) => {
-				return <div>{vat_number}</div>;
+			title: 'Faculty',
+			dataIndex: 'facultyId',
+			render: (facultyId) => {
+				return <div>{facultyId}</div>;
 			},
 		},
+		{
+			title: 'Category',
+			dataIndex: 'categoryId',
+			render: (categoryId) => {
+				return <div>{categoryId}</div>;
+			},
+		},
+		{
+			title: 'Courses',
+			dataIndex: 'courseId',
+			render: (courseId) => {
+				return <div>{courseId}</div>;
+			},
+		},
+		
 		
   ]
   return{columns};
