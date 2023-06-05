@@ -106,11 +106,7 @@ const navigate=useNavigate();
                   )}
                 </div>
 
-                {errors.terms && (
-                  <span className="text-red-800 block mt-2">
-                    {errors.terms?.message}
-                  </span>
-                )}
+             
 
                 <button
                   type="submit"

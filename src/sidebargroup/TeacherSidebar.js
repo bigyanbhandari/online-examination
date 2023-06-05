@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars,  FaChalkboardTeacher } from "react-icons/fa";
 import {HiUserGroup} from "react-icons/hi"
 
@@ -44,10 +44,16 @@ const routes = [
 ];
 
 const TeacherSidebar = ({ children }) => {
+  const navigate = useNavigate();
   
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const {isOpen : isOpenLogoutModal, onOpen: onOpenLogoutModal, onClose: onCloseLogoutModal} = useDisclosure();
+const storedData= localStorage.getItem('token');
+const handleLogout =()=>{
+localStorage.clear(storedData)
+navigate('/teacher')
+}
 
   const routes = [
 
@@ -176,9 +182,7 @@ const TeacherSidebar = ({ children }) => {
             })}
 
 <LogoutModal
-                handleLogout={() => {
-                  console.log('logout clicked')
-                }}
+                handleLogout={handleLogout}
                 isModalOpen={isOpenLogoutModal}
                 handleCancel={onCloseLogoutModal}
             />

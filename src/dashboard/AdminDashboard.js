@@ -1,6 +1,6 @@
 import React from 'react'
 import Dashboard from '../template/adminTemplate/Dashboard'
-import CategoreyForm from './CategoreyForm'
+// import CategoreyForm from './CategoreyForm'
 
 
 
@@ -14,8 +14,8 @@ const AdminDashboard = () => {
          Welcome To Admin Dashboard
          </div>
          <div className='flex ml-[40px] '>
-         {/* <Dashboard/> */}
-         <CategoreyForm/>
+         <Dashboard/>
+         {/* <CategoreyForm/> */}
      
          </div>
 

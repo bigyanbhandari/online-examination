@@ -22,7 +22,7 @@ const Sidebar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const {isOpen : isOpenLogoutModal, onOpen: onOpenLogoutModal, onClose: onCloseLogoutModal} = useDisclosure();
    
-  const storedData= localStorage.getItem('users');
+  const storedData= localStorage.getItem('token');
   const handleLogout = () => {
     localStorage.clear(storedData)
     navigate('/admin')
