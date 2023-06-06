@@ -12,9 +12,10 @@ function Teacher() {
     <div>
       <div className="App">
       {
-        currentForm== "Login"?
+        currentForm === "Login"?
          <TeacherLogin onFormSwitch={toggleForm}/> : <TeacherReg onFormSwitch={toggleForm}/>
       }
+      
      </div>
 
     </div>

@@ -1,4 +1,6 @@
 import React,{useState} from 'react'
+import { Button, FieldGroup } from '../../input';
+import styled from 'styled-components';
 
 const Exam = () => {
   const questions = [
@@ -53,6 +55,7 @@ const Exam = () => {
   const [showFinalResults,setFinalResults]=useState(false);
   const [score, setScore]=useState(0);
   const [currentQuestion,setCurrentQuestion]=useState(0); 
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const optionClicked=(isCorrect)=>{
     if(isCorrect){
@@ -70,9 +73,11 @@ const Exam = () => {
     setCurrentQuestion(0);
     setFinalResults(false);
   }
-
+  
+ 
+ 
   return (
-    <div className=' mt-[10%] flex  flex-col items-center ml-[200px]'>
+    <div className=' mt-2 flex  flex-col items-center w-full p-4'>
       <h1 className='text-2xl font-bold'>Questions</h1>
       <h2 className='text-xl'>Current Score: {score}</h2>
 
@@ -86,18 +91,24 @@ const Exam = () => {
 </div>
 
 ):
-<div className='bg-gray-500 p-[16px]  h-auto text-white shadow-xl w-[500px] flex  flex-col items-center gap-4 rounded-lg'>
-        <h2 className='text-[20px]'> {currentQuestion+1}  out of {questions.length}</h2>
-        <h3 className='text-3xl'> {questions[currentQuestion].text}</h3>
 
-        <ul className='flex flex-col gap-4'>
+<div className='bg-gray-200   h-auto  shadow-xl p-4  w-full  gap-4 rounded-lg'>
+  
+        <h2 className='text-[20px]'> {currentQuestion+1}  out of {questions.length}</h2>
+        <h3 className='text-2xl'> {questions[currentQuestion].text}</h3>
+          <form >
+        <ul className='flex flex-col  gap-4 mt-2 '>
           {questions[currentQuestion].options.map((option)=>{
             return(
-              <li key={option.id} onClick={()=>optionClicked(option.isCorrect)} className='cursor-pointer' >{option.text}</li>
+              <li   key={option.id} onClick={()=>optionClicked(option.isCorrect)} className='cursor-pointer  hover:bg-blue-300 rounded-lg p-2 w-[40%] ' >{option.text}</li>
             )
           })}
         </ul>
+         <Button className='float-right'>Submit</Button>
+        
+        </form>
       </div>
+      
 }
 
        

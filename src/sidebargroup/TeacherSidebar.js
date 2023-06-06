@@ -69,6 +69,11 @@ navigate('/teacher')
       icon: <BsQuestionCircleFill />,
     },
     {
+      path: "questionlist",
+      name: "Question List",
+      icon: <BsQuestionCircleFill />,
+    },
+    {
      
       path: "teacherexam",
       name: "Exam",
