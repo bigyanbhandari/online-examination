@@ -31,12 +31,14 @@ const navigate=useNavigate();
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({});
-
+const [courseId,setCourseId]=useState()
   const onSubmit =payload => {
    teacherLogin(payload)
    .then(data => {
+    console.log(data)
     if (data.status === "200") {
       localStorage.setItem('token', data.JwtToken);
+      setCourseId(data.course)
       navigate("/teacherdashboard");
     }
   })

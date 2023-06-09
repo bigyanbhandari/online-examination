@@ -4,8 +4,8 @@ import { useTable, useSortBy, useRowSelect, usePagination } from 'react-table';
 import Pagination from './Pagination';
 import TableControls from './TableControls';
 import Table from './Table';
-import { Checkbox } from '../input';
-import { usePaginatedFetch } from '../hooks';
+import { Checkbox } from './../input';
+import { usePaginatedFetch } from './../hooks';
 
 const DataTable = ({ onRowClick, apiRequest, columns, placeholder, isRowDisabled, onSelect, topAlign, columnClass, filter, filterGroups, rowKey = 'id', callAgain, noTableControls, noTablePagination, noLimit, rowId }) => {
   const {

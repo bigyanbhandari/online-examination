@@ -32,6 +32,7 @@ import TeacherSidebar from "./sidebargroup/TeacherSidebar";
 import TeacherQuestions from "./template/teacherTemplate/TeacherQuestions";
 import TeacherExam from "./template/teacherTemplate/TeacherExam";
 import TeaDashboard from "./template/teacherTemplate/TeaDashboard";
+import QuestionList from "./template/teacherTemplate/QuestionList";
 
 function App() {
   const Layout = () => {
@@ -116,6 +117,8 @@ function App() {
             <Route path="teacherquestions" Component={TeacherQuestions} />
             <Route path="teacherexam" Component={TeacherExam} />
             <Route path="teadashboard" Component={TeaDashboard} />
+            <Route path="questionlist" Component={QuestionList} />
+            
           </Route>
         </Routes>
       </Router>

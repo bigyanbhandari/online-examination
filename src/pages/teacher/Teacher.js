@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import TeacherLogin from './TeacherLogin';
-import { TeacherReg } from './TeacherReg';
+import TeacherReg from './TeacherReg';
+
 
 function Teacher() {
   const [currentForm, setCurrentForm]= useState('Login');
@@ -12,9 +13,10 @@ function Teacher() {
     <div>
       <div className="App">
       {
-        currentForm== "Login"?
+        currentForm === "Login"?
          <TeacherLogin onFormSwitch={toggleForm}/> : <TeacherReg onFormSwitch={toggleForm}/>
       }
+      
      </div>
 
     </div>

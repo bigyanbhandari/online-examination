@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { adminLogin } from '../../infra';
+import { ToastContainer,toast } from 'react-toastify';
 
 const AdminLogin = (props) => {
   const navigate=useNavigate();
@@ -14,9 +15,12 @@ const AdminLogin = (props) => {
   const onSubmit= payload=>{
     adminLogin(payload)
     .then(data => {
+      console.log(data)
       if (data.status === "200") {
         localStorage.setItem('token', data.JwtToken);
         navigate("/admindashboard");
+      console.log('loginnnnn')
+
       }
     })
   }
