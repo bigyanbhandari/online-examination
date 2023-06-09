@@ -86,8 +86,9 @@ navigate('/student')
 
   return (
     <>
-      <div className="main-container">
+      <div className="main-container  ">
         <motion.div
+        
           animate={{
             width: isOpen ? "200px" : "45px",
 
@@ -97,7 +98,7 @@ navigate('/student')
               damping: 10,
             },
           }}
-          className={`sidebar `}
+          className={`sidebar ` }
         >
           <div className="top_section">
             <AnimatePresence>

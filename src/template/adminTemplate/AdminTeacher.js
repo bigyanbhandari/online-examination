@@ -12,9 +12,7 @@ import TeacherTable from './admintempcontent/TeacherTable'
 
 const AdminTeacher = () => {
   const navigate =useNavigate();
-const handleClick =()=>{
-  navigate('addteacher')
-}
+
   return (
     <div >
    {/* <Card  icon={<FiUser  size={30}/>} label="Total Teacher" count="139" color="#FDF6E3"  pic={<AiOutlinePlusSquare size={50}  className=' ml-[100px] cursor-pointer '  onClick={handleClick}/>}/>  */}
