@@ -17,50 +17,40 @@ const TeacherReg = (props) => {
     setSelectedOption(event.target.value);
   };
 
-  // const isvalidnumber = (phonenumber) => {
-  //   const nepalPhoneRegex = /^(?:\+977|0)[7-9][0-9]{9}$/;
-  //   return nepalPhoneRegex.test(phonenumber);
-  // };
-  // const formSchema = z
-  //   .object({
-  //     userName: z
-  //       .string()
-  //       .min(1, "Username is required")
-  //       .max(50)
-  //       .nonempty()
-  //       .regex(/^(?!.*\.com).*$/i, "Username cannot contain '.com'"),
-  //     userEmail: z.string().email("Invalid email").min(1, "Email is required"),
-  //     userGender: z.string({ invalid_type_error: "Please select a gender." }),
-  //     userDateOfBirth: z.string().min(8, "Enter your DOB"),
+  const isvalidnumber = (phonenumber) => {
+    const nepalPhoneRegex = /^(?:\+977|0)[7-9][0-9]{9}$/;
+    return nepalPhoneRegex.test(phonenumber);
+  };
+  const formSchema = z
+    .object({
+      userName: z
+        .string()
+        .min(1, "Username is required")
+        .max(50)
+        .nonempty()
+        .regex(/^(?!.*\.com).*$/i, "Username cannot contain '.com'"),
+      userEmail: z.string().email("Invalid email").min(1, "Email is required"),
+      userGender: z.string({ invalid_type_error: "Please select a gender." }),
+      userDateOfBirth: z.string().min(8, "Enter your DOB"),
 
-  //     userContactNumber: z.string().refine((value) => isvalidnumber(value), {
-  //       message: "Invalid phone number format",
-  //     }),
+      userContactNumber: z.string().refine((value) => isvalidnumber(value), {
+        message: "Invalid phone number format",
+      }),
 
-  //     userPassword: z.string().min(1, "password is required"),
+      userPassword: z.string().min(1, "password is required"),
 
-  //     confirmPassword: z.string().min(1, "Password confirmation is required"),
-  //   })
-  //   .refine((data) => data.userPassword === data.confirmPassword, {
-  //     path: ["confirmPassword"],
-  //     message: "Passwords do not match",
-  //   });
+      confirmPassword: z.string().min(1, "Password confirmation is required"),
+    })
+    .refine((data) => data.userPassword === data.confirmPassword, {
+      path: ["confirmPassword"],
+      message: "Passwords do not match",
+    });
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors, isSubmitting },
-  //   setValue,
-  // } = useForm({
-  //   resolver: zodResolver(formSchema),
-  // });
-const [message,setMessage]= useState();
+  const [message, setMessage] = useState();
   const [course, setCourse] = useState();
   useEffect(() => {
     getAllCourse().then(setCourse);
   }, []);
-
-  console.log(course);
   const {
     handleSubmit,
     reset,
@@ -69,20 +59,17 @@ const [message,setMessage]= useState();
     setValue,
     setError,
     clearErrors,
-   
+
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({ resolver: zodResolver(formSchema) });
 
   const onSubmit = (setError) => (payload) => {
-    console.log(payload,'payload')
+    console.log(payload, "payload");
     return addTeacher(payload)
       .then((data) => {
-        if (data.data=== "teacher created successfully!!!") {
-         setMessage(data.data);
+        if (data.data === "teacher created successfully!!!") {
+          setMessage(data.data);
           reset();
-          
-          
-          
         } else {
           handleError(null, null, data.error_msg);
         }
@@ -105,13 +92,11 @@ const [message,setMessage]= useState();
 
               <form
                 className="space-y-4 md:space-y-6"
-                onSubmit={handleSubmit(onSubmit(setError))}
-              >
+                onSubmit={handleSubmit(onSubmit(setError))}>
                 <div>
                   <label
                     htmlFor="username"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Your username
                   </label>
                   <input
@@ -131,8 +116,7 @@ const [message,setMessage]= useState();
                 <div>
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Your email
                   </label>
 
@@ -153,8 +137,7 @@ const [message,setMessage]= useState();
                 <div>
                   <label
                     htmlFor="phonenumber"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     PhoneNumber
                   </label>
                   <input
@@ -171,17 +154,13 @@ const [message,setMessage]= useState();
                   )}
                 </div>
 
-               
-
                 <div>
                   <label
                     htmlFor="courses"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Courses
                   </label>
 
-                  
                   <Controller
                     name="courseId"
                     control={control}
@@ -192,8 +171,7 @@ const [message,setMessage]= useState();
                         {course?.data.map((options) => (
                           <option
                             key={options.courseId}
-                            value={options.courseId}
-                          >
+                            value={options.courseId}>
                             {options.courseTitle}
                           </option>
                         ))}
@@ -211,8 +189,7 @@ const [message,setMessage]= useState();
                 <div>
                   <label
                     htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Password
                   </label>
                   <input
@@ -232,8 +209,7 @@ const [message,setMessage]= useState();
                 <div>
                   <label
                     htmlFor="confirmPassword"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Confirm password
                   </label>
                   <input
@@ -253,8 +229,7 @@ const [message,setMessage]= useState();
                 <button
                   type="submit"
                   className="w-full text-white bg-green-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  disabled={isSubmitting}
-                >
+                  disabled={isSubmitting}>
                   Register
                 </button>
               </form>
