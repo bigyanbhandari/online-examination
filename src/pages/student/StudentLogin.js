@@ -41,6 +41,8 @@ const StudentLogin = (props) => {
     .then(data=>{
       if(data.status === "200"){
         localStorage.setItem('token',data.JwtToken);
+        localStorage.setItem('courseId',data.courseId);
+        localStorage.setItem('StudentId',data.StudentId);
         navigate('/studentdashboard')
         
       }
