@@ -34,6 +34,21 @@ export const getPendingTeacher = () => {
 export const getPendingStudent = () => {
   return request("GET", `${API_URL}/user/readAllStudent`, true);
 };
+
+export const approveUser = (id) => {
+  return request("POST", `${API_URL}/user/approveUser/${id}`, true);
+};
+export const getApprovedTeacher = () => {
+  return request("GET", `${API_URL}/user/view-all-approved-teacher`, true);
+};
+export const getApprovedStudent = () => {
+  return request("GET", `${API_URL}/user/view-all-approved-student`, true);
+};
+// export const createFaculty = payload=>{
+//   return request ('POST',`${API_URL}/faculty/create`,true, payload)
+
+// }
+
 export const examStart = (payload) => {
   const data = {
     examTitle: payload.examTitle,
@@ -75,12 +90,7 @@ export const createCourse = (payload) => {
 export const giveExam = (payload) => {
   return request("GET", `${API_URL}/exam/read-exams/52`, true, payload);
 };
-export const approveUser = (id) => {
-  return request("POST", `${API_URL}/user/approveUser/${id}`, true);
-};
-export const getApprovedTeacher = () => {
-  return request("GET", `${API_URL}/user/view-all-approved-teacher`, true);
-};
-export const getApprovedStudent = () => {
-  return request("GET", `${API_URL}/user/view-all-approved-student`, true);
+
+export const AnalyticsCount = () => {
+  return request("GET", `${API_URL}/count/all`, true);
 };
