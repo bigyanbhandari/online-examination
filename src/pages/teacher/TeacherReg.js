@@ -6,51 +6,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { addStudent, addTeacher, getAllCourse } from "../../infra";
 import { useNavigate } from "react-router-dom";
 import { useHandleError } from "../../hooks";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const TeacherReg = (props) => {
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState("");
-  const [options, setOptions] = useState([]);
   const handleError = useHandleError();
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const isvalidnumber = (phonenumber) => {
-    const nepalPhoneRegex = /^(?:\+977|0)[7-9][0-9]{9}$/;
-    return nepalPhoneRegex.test(phonenumber);
-  };
-  const formSchema = z
-    .object({
-      userName: z
-        .string()
-        .min(1, "Username is required")
-        .max(50)
-        .nonempty()
-        .regex(/^(?!.*\.com).*$/i, "Username cannot contain '.com'"),
-      userEmail: z.string().email("Invalid email").min(1, "Email is required"),
-      userGender: z.string({ invalid_type_error: "Please select a gender." }),
-      userDateOfBirth: z.string().min(8, "Enter your DOB"),
-
-      userContactNumber: z.string().refine((value) => isvalidnumber(value), {
-        message: "Invalid phone number format",
-      }),
-
-      userPassword: z.string().min(1, "password is required"),
-
-      confirmPassword: z.string().min(1, "Password confirmation is required"),
-    })
-    .refine((data) => data.userPassword === data.confirmPassword, {
-      path: ["confirmPassword"],
-      message: "Passwords do not match",
-    });
+  const [showPassword, setShowPassword] = useState(false);
 
   const [message, setMessage] = useState();
   const [course, setCourse] = useState();
+
   useEffect(() => {
     getAllCourse().then(setCourse);
   }, []);
+
   const {
     handleSubmit,
     reset,
@@ -61,7 +30,10 @@ const TeacherReg = (props) => {
     clearErrors,
 
     formState: { errors, isSubmitting },
-  } = useForm({ resolver: zodResolver(formSchema) });
+  } = useForm();
+  // const togglePasswordVisibility = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
   const onSubmit = (setError) => (payload) => {
     console.log(payload, "payload");
@@ -105,7 +77,13 @@ const TeacherReg = (props) => {
                     id="username"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="Your name"
-                    {...register("userName")}
+                    {...register("userName", {
+                      required: "UserName is required",
+                      pattern: {
+                        value: /^(?!.*\.com).*$/i,
+                        message: "username doesnot contain .com",
+                      },
+                    })}
                   />
                   {errors.userName && (
                     <span className="text-red-800 block mt-2">
@@ -126,7 +104,14 @@ const TeacherReg = (props) => {
                     name="userEmail"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="name@company.com"
-                    {...register("userEmail")}
+                    {...register("userEmail", {
+                      required: "Email is required",
+                      pattern: {
+                        value:
+                          /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
+                        message: "Invalid Email address",
+                      },
+                    })}
                   />
                   {errors.userEmail && (
                     <span className="text-red-800 block mt-2">
@@ -145,7 +130,13 @@ const TeacherReg = (props) => {
                     type="text"
                     placeholder="must include +977"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                    {...register("userContactNumber")}
+                    {...register("userContactNumber", {
+                      required: "Contact Number is Required",
+                      pattern: {
+                        value: /^(?:\+977|0)[7-9][0-9]{9}$/,
+                        message: "Invalid Contact Number",
+                      },
+                    })}
                   />
                   {errors.userContactNumber && (
                     <span className="text-red-800 block mt-2">
@@ -162,6 +153,9 @@ const TeacherReg = (props) => {
                   </label>
 
                   <Controller
+                    {...register("courseId", {
+                      required: "please select the course",
+                    })}
                     name="courseId"
                     control={control}
                     defaultValue="" // Set the default value if needed
@@ -198,15 +192,36 @@ const TeacherReg = (props) => {
                     name="userPassword"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                    {...register("userPassword")}
+                    {...register("userPassword", {
+                      required: "Enter the valid Password",
+                      pattern: {
+                        value:
+                          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                        message:
+                          "Use 8 or more characters with letters, numbers & symbols",
+                      },
+                    })}
                   />
+                  {/* <span className="eye-icon absolute top-[34px] left-[342px] px-4 float-right ">
+                    {showPassword ? (
+                      <FaEyeSlash
+                        className="password-icon  "
+                        onClick={togglePasswordVisibility}
+                      />
+                    ) : (
+                      <FaEye
+                        className="password-icon"
+                        onClick={togglePasswordVisibility}
+                      />
+                    )}
+                  </span> */}
                   {errors.userPassword && (
                     <span className="text-red-800 block mt-2">
                       {errors.userPassword?.message}
                     </span>
                   )}
                 </div>
-                <div>
+                {/* <div>
                   <label
                     htmlFor="confirmPassword"
                     className="block mb-2 text-sm font-medium text-gray-900">
@@ -224,7 +239,7 @@ const TeacherReg = (props) => {
                       {errors.confirmPassword?.message}
                     </span>
                   )}
-                </div>
+                </div> */}
 
                 <button
                   type="submit"

@@ -1,65 +1,62 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaBars,  FaChalkboardTeacher } from "react-icons/fa";
-import {HiUserGroup} from "react-icons/hi"
-import { AiOutlineDashboard} from "react-icons/ai";
-import {SlNotebook} from "react-icons/sl"
-import {TbLayoutDashboard} from "react-icons/tb"
-import {BsFillBuildingsFill } from "react-icons/bs"
-import {MdOutlineCategory} from "react-icons/md"
-import {BiLogOut} from "react-icons/bi"
+import { FaBars, FaChalkboardTeacher } from "react-icons/fa";
+import { HiUserGroup } from "react-icons/hi";
+import { AiOutlineDashboard } from "react-icons/ai";
+import { SlNotebook } from "react-icons/sl";
+import { BiLogOut } from "react-icons/bi";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
-import "../sidebargroup/sidebar.css"
-import adminlogo from "../assests/admin-logo.jpg"
+import "../sidebargroup/sidebar.css";
+import adminlogo from "../assests/admin-logo.jpg";
 import LogoutModal from "../components/LogoutModal";
 import { useDisclosure } from "../hooks/useDisclosure";
-
+import { FcApprove } from "react-icons/fc";
 
 const Sidebar = ({ children }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  const {isOpen : isOpenLogoutModal, onOpen: onOpenLogoutModal, onClose: onCloseLogoutModal} = useDisclosure();
-   
-  const storedData= localStorage.getItem('token');
-  const handleLogout = () => {
-    localStorage.clear(storedData)
-    navigate('/admin')
-    
-  }
-  const routes = [
+  const {
+    isOpen: isOpenLogoutModal,
+    onOpen: onOpenLogoutModal,
+    onClose: onCloseLogoutModal,
+  } = useDisclosure();
 
+  const storedData = localStorage.getItem("token");
+  const handleLogout = () => {
+    localStorage.clear(storedData);
+    navigate("/admin");
+  };
+  const routes = [
     {
       path: "/admindashboard",
-      
+
       name: "Dashboard",
       icon: <AiOutlineDashboard />,
     },
     {
       path: "adminteacher",
-      name: "Teacher",
+      name: " PendingTeacher",
       icon: <FaChalkboardTeacher />,
     },
     {
+      path: "approvedteacher",
+      name: " Approved Teacher",
+      icon: <FcApprove />,
+    },
+    {
       path: "adminstudent",
-      name: "Student",
+      name: " Pending Student",
       icon: <HiUserGroup />,
     },
     {
-     
-      path: "adminfaculty",
-      name: "Faculty",
-      icon: <BsFillBuildingsFill />,
+      path: "approvedStudent",
+      name: " Approved Student",
+      icon: <FcApprove />,
     },
+
     {
-     
-      path: "admincategories",
-      name: "Catagories",
-      icon: <MdOutlineCategory />,
-    },
-    {
-     
       path: "admincourses",
       name: "Courses",
       icon: <SlNotebook />,
@@ -67,14 +64,13 @@ const Sidebar = ({ children }) => {
     {
       // path: "/admin ",
       icon: (
-        <div className="flex gap-4" onClick={onOpenLogoutModal} >
-          <BiLogOut size={20}   />
+        <div className="flex gap-4" onClick={onOpenLogoutModal}>
+          <BiLogOut size={20} />
           <span>Logout</span>
         </div>
       ),
-    }
+    },
   ];
-  
 
   const showAnimation = {
     hidden: {
@@ -106,8 +102,7 @@ const Sidebar = ({ children }) => {
               damping: 10,
             },
           }}
-          className={`sidebar `}
-        >
+          className={`sidebar `}>
           <div className="top_section">
             <AnimatePresence>
               {isOpen && (
@@ -116,11 +111,15 @@ const Sidebar = ({ children }) => {
                   initial="hidden"
                   animate="show"
                   exit="hidden"
-                  className="logo"
-                >
-                 < div className="flex flex-col gap-4">
-                  <img src={adminlogo}  className="rounded-full -ml-2 h-[150px] w-[150px] "/>
-                  <span className="font-bold text-2xl flex justify-center ">Admin</span>
+                  className="logo">
+                  <div className="flex flex-col gap-4">
+                    <img
+                      src={adminlogo}
+                      className="rounded-full -ml-2 h-[150px] w-[150px] "
+                    />
+                    <span className="font-bold text-2xl flex justify-center ">
+                      Admin
+                    </span>
                   </div>
                 </motion.h1>
               )}
@@ -130,9 +129,7 @@ const Sidebar = ({ children }) => {
               <FaBars onClick={toggle} />
             </div>
           </div>
-          
-            
-          
+
           <section className="routes">
             {routes.map((route, index) => {
               if (route.subRoutes) {
@@ -147,12 +144,7 @@ const Sidebar = ({ children }) => {
               }
 
               return (
-                <NavLink
-                  to={route.path}
-                  key={index}
-                  className="link"
-                  
-                >
+                <NavLink to={route.path} key={index} className="link">
                   <div className="icon">{route.icon}</div>
                   <AnimatePresence>
                     {isOpen && (
@@ -161,8 +153,7 @@ const Sidebar = ({ children }) => {
                         initial="hidden"
                         animate="show"
                         exit="hidden"
-                        className="link_text"
-                      >
+                        className="link_text">
                         {route.name}
                       </motion.div>
                     )}
@@ -171,9 +162,9 @@ const Sidebar = ({ children }) => {
               );
             })}
             <LogoutModal
-                handleLogout={handleLogout}
-                isModalOpen={isOpenLogoutModal}
-                handleCancel={onCloseLogoutModal}
+              handleLogout={handleLogout}
+              isModalOpen={isOpenLogoutModal}
+              handleCancel={onCloseLogoutModal}
             />
           </section>
         </motion.div>
