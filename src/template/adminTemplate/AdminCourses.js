@@ -20,7 +20,9 @@ const AdminCourses = () => {
       userId:402
     }
     createCourse(data)
-    .then(console.log(data,'Course added'))
+    .then(
+      window.location.reload()
+    )
      
   
     

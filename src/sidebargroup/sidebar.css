@@ -8,6 +8,8 @@
   
   .main-container {
     display: flex;
+  
+    
     
   }
   main {
@@ -22,9 +24,9 @@
   
   /* Sidebar */
   .sidebar {
-    background: #5964FF;
+    background: #0D47A1;
     color: white;
-    height: 100vh;
+    height:100vh;
     overflow-y: auto;
   }
   
