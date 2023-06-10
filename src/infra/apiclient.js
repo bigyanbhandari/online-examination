@@ -1,6 +1,6 @@
-import { formatLongDate } from "../utils/date";
-import request from "./request";
-const API_URL = "http://localhost:9595";
+import { formatLongDate } from '../utils/date';
+import request from './request';
+const API_URL="http://localhost:9595";
 
 export const teacherLogin = (payload) => {
   return request("POST", `${API_URL}/user/login`, false, payload);
@@ -94,3 +94,29 @@ export const giveExam = (payload) => {
 export const AnalyticsCount = () => {
   return request("GET", `${API_URL}/count/all`, true);
 };
+export const createPdf = (id) => {
+  return request("POST", `${API_URL}/pdf/createPdf/${id}`, true);
+};
+  // export const createFaculty = payload=>{
+  //   return request ('POST',`${API_URL}/faculty/create`,true, payload)
+
+  // }
+
+ 
+
+
+ 
+
+ 
+
+ 
+
+  
+  export const getExambyID = (id)=>{
+    return request ('GET',`${API_URL}/exam/read-exam/${id}`,true)
+
+  }
+  export const submitExam = (payload)=>{
+    return request ('POST',`${API_URL}/exam/submit-exams`,true,payload)
+
+  }

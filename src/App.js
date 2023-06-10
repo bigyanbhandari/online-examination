@@ -26,6 +26,7 @@ import StudentSidebar from "./sidebargroup/StudentSidebar";
 import StudentDashboard from "./dashboard/StudentDashboard";
 import Exam from "./template/studentTemplate/Exam";
 import Marks from "./template/studentTemplate/Marks";
+import ExamList from "./template/studentTemplate/ExamList"
 
 import StuDashboard from "./template/studentTemplate/StuDashboard";
 import TeacherSidebar from "./sidebargroup/TeacherSidebar";
@@ -105,6 +106,7 @@ function App() {
               exact
               Component={StudentDashboard}
             />
+            <Route path="examlist" Component={ExamList} />
             <Route path="exam" Component={Exam} />
             <Route path="marks" Component={Marks} />
             <Route path="studashboard" Component={StuDashboard} />

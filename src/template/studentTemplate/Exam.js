@@ -1,138 +1,171 @@
 import React, { useEffect, useState } from "react";
-import { giveExam } from "../../infra";
+import { createPdf, getExambyID, submitExam } from "../../infra";
 import { useForm } from "react-hook-form";
-import { FieldGroup } from "../../input";
-import Card from "./Card";
+import { Button, FieldGroup } from "../../input";
+
+// function OnlineExamTimer() {
+//   const examDuration = 30; // Duration of the exam in minutes
+//   const endTime = new Date();
+//   endTime.setMinutes(endTime.getMinutes() + examDuration);
+
+//   const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining());
+
+//   useEffect(() => {
+//     const countdownInterval = setInterval(() => {
+//       const remaining = getTimeRemaining();
+//       setTimeRemaining(remaining);
+
+//       if (remaining <= 0) {
+//         clearInterval(countdownInterval);
+//         submitExam();
+//       }
+//     }, 1000);
+
+//     return () => {
+//       clearInterval(countdownInterval);
+//     };
+//   }, []);
+
+//   const getTimeRemaining = () => {
+//     const currentTime = new Date().getTime();
+//     const remaining = endTime - currentTime;
+//     return Math.max(0, remaining);
+//   };
+
+//   const submitExam = () => {
+//     // Code to submit the exam
+//     alert("Time's up! Submitting the exam...");
+//     // Add your submission code here
+//   };
+
+//   const formatTime = (time) => {
+//     const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+//     const seconds = Math.floor((time % (1000 * 60)) / 1000);
+//     return `${minutes}m ${seconds}s`;
+//   };
+
+//   return (
+//     <div>
+//       <h1>Online Exam Timer</h1>
+//       <p>Time Remaining: {formatTime(timeRemaining)}</p>
+//       <button onClick={submitExam}>Submit</button>
+//     </div>
+//   );
+// }
+// export default OnlineExamTimer;
 
 const Exam = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm();
 
   const [exam, setExam] = useState();
-
-  console.log(exam);
+  const examId = localStorage.getItem("examId");
+  const courseId = localStorage.getItem("courseId");
+  const StudentId = localStorage.getItem("StudentId");
+  const ResultId = localStorage.getItem("ResultId");
+  console.log(ResultId);
 
   useEffect(() => {
-    giveExam().then(setExam);
-  }, []);
+    getExambyID(examId).then(setExam);
+  }, [examId]);
 
-  // const handleOptionChange = (questionIndex, optionId) => {
-  //   setSelectedAnswers((prevSelectedAnswers) => {
-  //     const updatedSelectedAnswers = [...prevSelectedAnswers];
-  //     updatedSelectedAnswers[questionIndex] = optionId;
-  //     return updatedSelectedAnswers;
-  //   });
-  // };
-  // const onSubmit=(payload)={
-  //   console.log(payload),
-  // };
-  const onSubmit = (setError) => (payload) => {
+  const onSubmit = (payload) => {
+    const selectedChoiceDtos = [];
+
+    // Iterate over the exam questions
+    exam?.data.questionDtos.forEach((item) => {
+      const questionId = item.questionId;
+      const selectedChoice = payload[`question-${questionId}`];
+
+      // Add the selected choice to the array
+      selectedChoiceDtos.push({
+        questionId: questionId,
+        selectedChoice: selectedChoice,
+      });
+    });
+    payload = {
+      examId: Number(examId),
+      studentId: Number(StudentId),
+      courseId: Number(courseId),
+      selectedChoiceDtos: selectedChoiceDtos,
+    };
     console.log(payload);
+    submitExam(payload).then((data) => {
+      localStorage.setItem("ResultId", data.ResultId);
+    });
   };
 
   return (
     <div className="w-full px-4 overflow-y-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-4">
-            <FieldGroup
-              name="name"
-              label="Question"
-              hideLabel={false}
-              error={errors.amount}
-              className="text-md my-4 col-span-4"
-            />
-            <div>
-              <Card />
-            </div>
-            
-            {/* <div className="col-span-2">
-              <div className="flex  items-center gap-4">
-                <input
-                  type="radio"
-                  value="option1"
-                  {...register("radioOption")}
-                />
-                <span>A</span>
+        {exam?.data.questionDtos.map((item, id) => {
+          return (
+            <div className="grid grid-cols-4" key={id}>
+              <FieldGroup
+                name={`question-${item.questionId}`}
+                label={item.questionTitle}
+                hideLabel={false}
+                error={errors[`question-${item.questionId}`]}
+                className="text-md my-4 col-span-4"
+              />
+              <div className="col-span-2">
+                <div className="flex  items-center gap-4">
+                  <input
+                    type="radio"
+                    value={item.choice1}
+                    {...register(`question-${item.questionId}`)}
+                  />
+                  <span>{item.choice1}</span>
+                </div>
+              </div>
+              <div className="col-span-2">
+                <div className="flex  items-center gap-4">
+                  <input
+                    type="radio"
+                    value={item.choice2}
+                    {...register(`question-${item.questionId}`)}
+                  />
+                  <span>{item.choice2}</span>
+                </div>
+              </div>
+              <div className="col-span-2">
+                <div className="flex  items-center gap-4">
+                  <input
+                    type="radio"
+                    value={item.choice3}
+                    {...register(`question-${item.questionId}`)}
+                  />
+                  <span>{item.choice3}</span>
+                </div>
+              </div>
+              <div className="col-span-2">
+                <div className="flex  items-center gap-4">
+                  <input
+                    type="radio"
+                    value={item.choice4}
+                    {...register(`question-${item.questionId}`)}
+                  />
+                  <span>{item.choice4}</span>
+                </div>
               </div>
             </div>
-            <div className="col-span-2">
-              <div className="flex  items-center gap-4">
-                <input
-                  type="radio"
-                  value="option1"
-                  {...register("radioOption")}
-                />
-                <span>A</span>
-              </div>
-            </div>
-            <div className="col-span-2">
-              <div className="flex  items-center gap-4">
-                <input
-                  type="radio"
-                  value="option1"
-                  {...register("radioOption")}
-                />
-                <span>A</span>
-              </div>
-            </div>
-            <div className="col-span-2">
-              <div className="flex  items-center gap-4">
-                <input
-                  type="radio"
-                  value="option1"
-                  {...register("radioOption")}
-                />
-                <span>A</span>
-              </div>
-            </div> */}
-          </div>
+          );
+        })}
 
-        <button className="pt-4" type="submit">
-          Submit
-        </button>
+        <Button className=" bg-green-120 font-normal mt-5" full type="submit">
+          submit
+        </Button>
       </form>
+      {ResultId &&
+        <div onClick={()=>{createPdf(ResultId).then(console.log('success'))}} className="px-4 py-2 bg-green-600 mt-4 cursor-pointer ">
+          <div className="flex justify-center items-center">View Result</div>
+        </div>
+      }
     </div>
   );
 };
 
 export default Exam;
-
-//     <div className=' mt-2 flex  flex-col items-center w-full p-4'>
-//       <h1 className='text-2xl font-bold'>Questions</h1>
-//       <h2 className='text-xl'>Current Score: {score}</h2>
-
-// {showFinalResults ?(
-//  <div>
-//  <h1>Final Results</h1>
-//  <h2>
-//    {score} out of {questions.length} correct- ({(score/questions.length)*100}%)
-//  </h2>
-//  <button className='bg-red-500 rounded-lg' onClick={restartGame}>Restart Quiz</button>
-// </div>
-
-// ):
-
-// <div className='bg-gray-200   h-auto  shadow-xl p-4  w-full  gap-4 rounded-lg'>
-
-//         <h2 className='text-[20px]'> {currentQuestion+1}  out of {questions.length}</h2>
-//         <h3 className='text-2xl'> {questions[currentQuestion].text}</h3>
-//           <form >
-//         <ul className='flex flex-col  gap-4 mt-2 '>
-//           {questions[currentQuestion].options.map((option)=>{
-//             return(
-//               <li   key={option.id} onClick={()=>optionClicked(option.isCorrect)} className='cursor-pointer  hover:bg-blue-300 rounded-lg p-2 w-[40%] ' >{option.text}</li>
-//             )
-//           })}
-//         </ul>
-//          <Button className='float-right'>Submit</Button>
-
-//         </form>
-//       </div>
-
-// }
-
-//     </div>

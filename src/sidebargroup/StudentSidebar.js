@@ -41,7 +41,7 @@ navigate('/student')
     },
     
     {
-      path: "exam",
+      path: "examlist",
       name: "Exam",
       icon: <GiNotebook />,
     },
@@ -111,7 +111,8 @@ navigate('/student')
                   className="logo"
                 >
                  < div className="flex flex-col gap-4">
-                  <img src={studentlogo}  className="rounded-full -ml-2 h-[150px] w-[150px] "/>
+                  <img src={studentlogo}
+                    className="rounded-full -ml-2 h-[150px] w-[150px] " alt="student logo"/>
                   <span className="font-bold text-2xl flex justify-center ">Student</span>
                   </div>
                 </motion.h1>
