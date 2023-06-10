@@ -7,6 +7,7 @@ import { examStart } from "../../infra";
 
 const TeacherExam = () => {
   const [currentTime, setCurrentTime] = useState("");
+  const [msg, setMsg] = useState();
   const {
     control,
     register,
@@ -33,7 +34,6 @@ const TeacherExam = () => {
   };
 
   useEffect(() => {
-    console.log(new Date().toISOString().slice(0, 16));
     setCurrentTime(new Date().toISOString().slice(0, 16));
   }, []);
 
@@ -49,11 +49,15 @@ const TeacherExam = () => {
   // };
 
   const onSubmit = (setError) => (payload) => {
-    examStart(payload).then(console.log("success"));
+    examStart(payload).then((data)=>{
+      setMsg(data?.data)
+      
+    });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit(setError))}>
+      <div className="text-green-600">{msg}</div>
       <FieldGroup
         name="examTitle"
         label="Exam Title"

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getExambyID, submitExam } from "../../infra";
+import { createPdf, getExambyID, submitExam } from "../../infra";
 import { useForm } from "react-hook-form";
 import { Button, FieldGroup } from "../../input";
-
-
 
 // function OnlineExamTimer() {
 //   const examDuration = 30; // Duration of the exam in minutes
@@ -56,7 +54,6 @@ import { Button, FieldGroup } from "../../input";
 // }
 // export default OnlineExamTimer;
 
-
 const Exam = () => {
   const {
     register,
@@ -68,6 +65,8 @@ const Exam = () => {
   const examId = localStorage.getItem("examId");
   const courseId = localStorage.getItem("courseId");
   const StudentId = localStorage.getItem("StudentId");
+  const ResultId = localStorage.getItem("ResultId");
+  console.log(ResultId);
 
   useEffect(() => {
     getExambyID(examId).then(setExam);
@@ -75,28 +74,29 @@ const Exam = () => {
 
   const onSubmit = (payload) => {
     const selectedChoiceDtos = [];
-  
+
     // Iterate over the exam questions
     exam?.data.questionDtos.forEach((item) => {
       const questionId = item.questionId;
       const selectedChoice = payload[`question-${questionId}`];
-  
+
       // Add the selected choice to the array
       selectedChoiceDtos.push({
         questionId: questionId,
         selectedChoice: selectedChoice,
       });
     });
-  payload={
-    examId:Number(examId),
-    studentId:Number(StudentId),
-    courseId:Number(courseId),
-    selectedChoiceDtos:selectedChoiceDtos
-  }
-  console.log(payload)
-  submitExam(payload).then(console.log('success'))
+    payload = {
+      examId: Number(examId),
+      studentId: Number(StudentId),
+      courseId: Number(courseId),
+      selectedChoiceDtos: selectedChoiceDtos,
+    };
+    console.log(payload);
+    submitExam(payload).then((data) => {
+      localStorage.setItem("ResultId", data.ResultId);
+    });
   };
-  
 
   return (
     <div className="w-full px-4 overflow-y-auto">
@@ -155,14 +155,15 @@ const Exam = () => {
           );
         })}
 
-        <Button
-          className=" bg-green-120 font-normal"
-          full
-          type="submit"
-        >
-           submit
+        <Button className=" bg-green-120 font-normal mt-5" full type="submit">
+          submit
         </Button>
       </form>
+      {ResultId &&
+        <div onClick={()=>{createPdf(ResultId).then(console.log('success'))}} className="px-4 py-2 bg-green-600 mt-4 cursor-pointer ">
+          <div className="flex justify-center items-center">View Result</div>
+        </div>
+      }
     </div>
   );
 };
