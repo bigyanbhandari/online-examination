@@ -10,18 +10,18 @@ import TeacherTable from './admintempcontent/TeacherTable'
 
 
 
+
 const AdminTeacher = () => {
   const navigate =useNavigate();
 
   return (
-    <div >
+    <div className='w-full' >
    {/* <Card  icon={<FiUser  size={30}/>} label="Total Teacher" count="139" color="#FDF6E3"  pic={<AiOutlinePlusSquare size={50}  className=' ml-[100px] cursor-pointer '  onClick={handleClick}/>}/>  */}
-   <div className='font-bold text-2xl pb-8'>Teacher List</div>
+   <div className='font-bold flex flex-col items-center text-2xl pb-8'>Teacher List</div>
      <TeacherTable/>
-     
     
     </div>
-    
+
   )
 }
 

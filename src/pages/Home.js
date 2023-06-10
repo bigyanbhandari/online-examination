@@ -1,5 +1,5 @@
 import React from 'react'
-import image from "../assests/home-image.png"
+import image from "../assests/img.png"
 import earth from "../assests/plant.svg"
 import Faqs from '../components/Faqs'
 
@@ -12,9 +12,11 @@ const Home = () => {
       
     <div className='flex '>
      <div className=' w-[50%] bg-blue-900 h-[450px] '>
-      <div className='mt-20 ml-14 text-4xl text-white font-semibold font-sans'>
-     Online Platform for<br/>
-     <span className='text-5xl'>SMOOTH EXAMS</span> 
+      <div className='mt-20 ml-14 px-2 flex flex-col gap-5 text-4xl text-white font-semibold font-sans'>
+     <span>Online Examination System</span>
+     <span className='text-xl  font-thin  '>Exam Hall offers a tested, feature-rich solution for a better experience in Online Examination Software to Conduct Semester Exams, Mock Tests, Entrance Exams, and Tuition Class Assessments in a Proctored Environment.
+
+</span> 
      
 
      <div className='mt-14 flex gap-8 items-center'>

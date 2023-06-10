@@ -30,14 +30,21 @@ export const createQuestion = payload => {
     return request('GET', `${API_URL}/question/readByCourse/52`, true);
     
   }
+  export const getPendingTeacher=()=>{
+    return request ('GET',`${API_URL}/user/readAllTeacher`,true)
+  }
+  export const getPendingStudent=()=>{
+    return request ('GET',`${API_URL}/user/readAllStudent`,true)
+  }
   export const examStart = (payload) => {
+    
     const data = {
       examTitle: payload.examTitle,
       examDesc: payload.examDesc,
       examStartedTime: formatLongDate(payload.examStartedTime),
       examEndedTime: formatLongDate(payload.examEndedTime),
       questionPattern: payload.questionPattern,
-      examQuestionDisplayLimit: payload.examQuestionDisplayLimit,
+      examQuestionDisplayLimit: parseInt(payload.examQuestionDisplayLimit),
     }
     return request('POST', `${API_URL}/exam/create`, true,data);
     
@@ -68,5 +75,10 @@ export const createQuestion = payload => {
 
   export const createCourse = payload=>{
     return request ('POST',`${API_URL}/course/create`,true, payload)
+
+  }
+
+  export const giveExam = payload=>{
+    return request ('GET',`${API_URL}/exam/read-exams/52`,true, payload)
 
   }

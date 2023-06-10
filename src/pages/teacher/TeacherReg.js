@@ -54,7 +54,7 @@ const TeacherReg = (props) => {
   // } = useForm({
   //   resolver: zodResolver(formSchema),
   // });
-
+const [message,setMessage]= useState();
   const [course, setCourse] = useState();
   useEffect(() => {
     getAllCourse().then(setCourse);
@@ -69,17 +69,20 @@ const TeacherReg = (props) => {
     setValue,
     setError,
     clearErrors,
+   
     formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = (setError) => (payload) => {
+    console.log(payload,'payload')
     return addTeacher(payload)
       .then((data) => {
-        if (data.status === "200") {
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
+        if (data.data=== "teacher created successfully!!!") {
+         setMessage(data.data);
           reset();
+          
+          
+          
         } else {
           handleError(null, null, data.error_msg);
         }
@@ -93,6 +96,7 @@ const TeacherReg = (props) => {
     <div>
       <section className="">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto ">
+          <div className="text-red-600 text-2xl">{message}</div>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0  dark:border-gray-300">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">

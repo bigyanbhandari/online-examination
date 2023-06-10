@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react'
 import DataTable from '../../../tables/DataTable';
-import { getPendingTeacher } from '../../../infra';
+import { getPendingStudent } from '../../../infra';
 
 
-const TeacherTable = () => {
+
+const StudentTable = () => {
   
 const columns = useMemo(()=>[
   {
-    Header: ('Teacher Name'),
+    Header: ('Student Name'),
     accessor: 'userName',
   },
   {
@@ -30,10 +31,10 @@ const columns = useMemo(()=>[
     <div className="max-w-full mx-auto px-4 py-4 sm:px-6 md:px-8 bg-white">
       <DataTable
       columns={columns}
-      apiRequest={getPendingTeacher}
+      apiRequest={getPendingStudent}
       />
     </div>
   )
 }
 
-export default TeacherTable
+export default StudentTable

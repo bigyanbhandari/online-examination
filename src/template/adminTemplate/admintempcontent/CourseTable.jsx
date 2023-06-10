@@ -6,8 +6,12 @@ import {  getAllCourse } from '../../../infra';
 const CourseTable = () => {
     const columns = useMemo(() => [
         {
-            Header: ('Id'),
-            accessor:'userId'
+            Header: ('SN'),
+            Cell:({row:{index}})=>(
+              <div className=''>
+                {++index}
+              </div>
+            )
           },
         {
           Header: ('Course Name'),

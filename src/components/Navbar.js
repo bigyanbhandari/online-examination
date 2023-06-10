@@ -6,7 +6,7 @@ import logo from "../assests/download.jpg"
 
 const Navbar = () => {
   return (
-    <div className=' bg-[#5964FF] h-[60px] m-0 p-0 '>
+    <div className=' bg-blue-900 h-[60px] m-0 p-0 '>
        
      <nav className='flex justify-center justify-around sticky '>
         <div className='text-4xl font-bold text-white font-mono '> 

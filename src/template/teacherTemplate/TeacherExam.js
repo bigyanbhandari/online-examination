@@ -30,7 +30,7 @@ const TeacherExam = () => {
   // };
 
   const onSubmit = setError => payload => {
-    examStart(payload).then(console.log('success'))
+    examStart(payload ).then(console.log('success'))
   };
 
   return (
