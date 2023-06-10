@@ -9,6 +9,7 @@ const ExamList = () => {
   const courseId = localStorage.getItem("courseId");
 
 
+
   useEffect(() => {
     giveExam(courseId)?.then(setExam);
   }, [courseId]);

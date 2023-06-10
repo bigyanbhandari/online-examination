@@ -94,8 +94,8 @@ export const giveExam = (payload) => {
 export const AnalyticsCount = () => {
   return request("GET", `${API_URL}/count/all`, true);
 };
-export const createPdf = (id) => {
-  return request("POST", `${API_URL}/pdf/createPdf/${id}`, true);
+export const viewResult = () => {
+  return request("GET", `${API_URL}/result/view`, true);
 };
   // export const createFaculty = payload=>{
   //   return request ('POST',`${API_URL}/faculty/create`,true, payload)

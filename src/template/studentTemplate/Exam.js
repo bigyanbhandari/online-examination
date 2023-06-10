@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createPdf, getExambyID, submitExam } from "../../infra";
+import { createPdf, getExambyID, submitExam, viewResult } from "../../infra";
 import { useForm } from "react-hook-form";
 import { Button, FieldGroup } from "../../input";
 
@@ -62,6 +62,8 @@ const Exam = () => {
   } = useForm();
 
   const [exam, setExam] = useState();
+  const [msg, setMsg] = useState();
+  
   const examId = localStorage.getItem("examId");
   const courseId = localStorage.getItem("courseId");
   const StudentId = localStorage.getItem("StudentId");
@@ -94,7 +96,9 @@ const Exam = () => {
     };
     console.log(payload);
     submitExam(payload).then((data) => {
+      
       localStorage.setItem("ResultId", data.ResultId);
+      window.location.reload();
     });
   };
 
@@ -159,11 +163,6 @@ const Exam = () => {
           submit
         </Button>
       </form>
-      {ResultId &&
-        <div onClick={()=>{createPdf(ResultId).then(console.log('success'))}} className="px-4 py-2 bg-green-600 mt-4 cursor-pointer ">
-          <div className="flex justify-center items-center">View Result</div>
-        </div>
-      }
     </div>
   );
 };
