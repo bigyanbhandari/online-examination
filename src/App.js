@@ -33,6 +33,8 @@ import TeacherQuestions from "./template/teacherTemplate/TeacherQuestions";
 import TeacherExam from "./template/teacherTemplate/TeacherExam";
 import TeaDashboard from "./template/teacherTemplate/TeaDashboard";
 import QuestionList from "./template/teacherTemplate/QuestionList";
+import ApprovedTeacher from "./template/adminTemplate/ApprovedTeacher";
+import ApprovedStudent from "./template/adminTemplate/ApprovedStudent";
 
 function App() {
   const Layout = () => {
@@ -91,8 +93,8 @@ function App() {
 
             <Route path="adminteacher" Component={AdminTeacher} />
             <Route path="adminstudent" Component={AdminStudent} />
-            <Route path="adminfaculty" Component={AdminFaculty} />
-            <Route path="admincategories" Component={AdminCatagories} />
+            <Route path="approvedteacher" Component={ApprovedTeacher} />
+            <Route path="approvedstudent" Component={ApprovedStudent} />
             <Route path="admincourses" Component={AdminCourses} />
             <Route path="adminteacher/addteacher" Component={AddTeacher} />
           </Route>
@@ -118,7 +120,6 @@ function App() {
             <Route path="teacherexam" Component={TeacherExam} />
             <Route path="teadashboard" Component={TeaDashboard} />
             <Route path="questionlist" Component={QuestionList} />
-            
           </Route>
         </Routes>
       </Router>

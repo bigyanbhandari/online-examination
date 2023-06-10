@@ -17,50 +17,6 @@ const StudentReg = (props) => {
     setSelectedOption(event.target.value);
   };
 
-  // const isvalidnumber = (phonenumber) => {
-  //   const nepalPhoneRegex = /^(?:\+977|0)[7-9][0-9]{9}$/;
-  //   return nepalPhoneRegex.test(phonenumber);
-  // };
-  // const formSchema = z
-  //   .object({
-  //     userName: z
-  //       .string()
-  //       .min(1, "Username is required")
-  //       .max(50)
-  //       .nonempty()
-  //       .regex(/^(?!.*\.com).*$/i, "Username cannot contain '.com'"),
-  //     userEmail: z.string().email("Invalid email").min(1, "Email is required"),
-  //     userGender: z.string({ invalid_type_error: "Please select a gender." }),
-  //     userDateOfBirth: z.string().min(8, "Enter your DOB"),
-
-  //     userContactNumber: z.string().refine((value) => isvalidnumber(value), {
-  //       message: "Invalid phone number format",
-  //     }),
-
-  //     userPassword: z.string().min(1, "password is required"),
-
-  //     confirmPassword: z.string().min(1, "Password confirmation is required"),
-  //   })
-  //   .refine((data) => data.userPassword === data.confirmPassword, {
-  //     path: ["confirmPassword"],
-  //     message: "Passwords do not match",
-  //   });
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors, isSubmitting },
-  //   setValue,
-  // } = useForm({
-  //   resolver: zodResolver(formSchema),
-  // });
-
-  const [course, setCourse] = useState();
-  useEffect(() => {
-    getAllCourse().then(setCourse);
-  }, []);
-
-  console.log(course);
   const {
     handleSubmit,
     reset,
@@ -71,6 +27,13 @@ const StudentReg = (props) => {
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm();
+
+  const [course, setCourse] = useState();
+  useEffect(() => {
+    getAllCourse().then(setCourse);
+  }, []);
+
+  console.log(course);
 
   const onSubmit = (setError) => (payload) => {
     return addStudent(payload)
@@ -101,13 +64,11 @@ const StudentReg = (props) => {
 
               <form
                 className="space-y-4 md:space-y-6"
-                onSubmit={handleSubmit(onSubmit(setError))}
-              >
+                onSubmit={handleSubmit(onSubmit(setError))}>
                 <div>
                   <label
                     htmlFor="username"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Your username
                   </label>
                   <input
@@ -116,7 +77,13 @@ const StudentReg = (props) => {
                     id="username"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="Your name"
-                    {...register("userName")}
+                    {...register("userName", {
+                      required: "please enter the valid username",
+                      pattern: {
+                        value: /^(?!.*\.com).*$/i,
+                        message: "Invalid Username",
+                      },
+                    })}
                   />
                   {errors.userName && (
                     <span className="text-red-800 block mt-2">
@@ -127,8 +94,7 @@ const StudentReg = (props) => {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Your email
                   </label>
 
@@ -138,7 +104,14 @@ const StudentReg = (props) => {
                     name="userEmail"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="name@company.com"
-                    {...register("userEmail")}
+                    {...register("userEmail", {
+                      required: "Email is required",
+                      pattern: {
+                        value:
+                          /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
+                        message: "Invalid Email address",
+                      },
+                    })}
                   />
                   {errors.userEmail && (
                     <span className="text-red-800 block mt-2">
@@ -149,8 +122,7 @@ const StudentReg = (props) => {
                 <div>
                   <label
                     htmlFor="phonenumber"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     PhoneNumber
                   </label>
                   <input
@@ -158,7 +130,13 @@ const StudentReg = (props) => {
                     type="text"
                     placeholder="must include +977"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                    {...register("userContactNumber")}
+                    {...register("userContactNumber", {
+                      required: "Enter the Valid PnoneNumber",
+                      pattern: {
+                        value: /^(?:\+977|0)[7-9][0-9]{9}$/,
+                        message: "Enter the Valid PhoneNumber",
+                      },
+                    })}
                   />
                   {errors.userContactNumber && (
                     <span className="text-red-800 block mt-2">
@@ -171,14 +149,15 @@ const StudentReg = (props) => {
                   <div>
                     <label
                       htmlFor="gender"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
+                      className="block mb-2 text-sm font-medium text-gray-900">
                       Gender
                     </label>
                     <div className="flex gap-1">
                       <input
                         type="radio"
-                        {...register("userGender")}
+                        {...register("userGender", {
+                          required: "Please select Gender",
+                        })}
                         value="Male"
                       />
                       Male
@@ -205,8 +184,7 @@ const StudentReg = (props) => {
                   <div>
                     <label
                       htmlFor="dob"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
+                      className="block mb-2 text-sm font-medium text-gray-900">
                       Date of Birth
                     </label>
                     <input
@@ -227,24 +205,25 @@ const StudentReg = (props) => {
                 <div>
                   <label
                     htmlFor="courses"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Courses
                   </label>
 
-                  
                   <Controller
+                    {...register("courseId", {
+                      required: "please select the course",
+                    })}
                     name="courseId"
                     control={control}
-                    defaultValue="" // Set the default value if needed
+                    defaultValue=""
+                    // Set the default value if needed
                     render={({ field }) => (
                       <select {...field}>
                         <option value="">Select an option</option>
                         {course?.data.map((options) => (
                           <option
                             key={options.courseId}
-                            value={options.courseId}
-                          >
+                            value={options.courseId}>
                             {options.courseTitle}
                           </option>
                         ))}
@@ -262,8 +241,7 @@ const StudentReg = (props) => {
                 <div>
                   <label
                     htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                    className="block mb-2 text-sm font-medium text-gray-900">
                     Password
                   </label>
                   <input
@@ -272,7 +250,14 @@ const StudentReg = (props) => {
                     name="userPassword"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                    {...register("userPassword")}
+                    {...register("userPassword", {
+                      required: "Enter the valid Password",
+                      pattern: {
+                        value:
+                          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                        message: "Invalid Password",
+                      },
+                    })}
                   />
                   {errors.userPassword && (
                     <span className="text-red-800 block mt-2">
@@ -280,32 +265,11 @@ const StudentReg = (props) => {
                     </span>
                   )}
                 </div>
-                <div>
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block mb-2 text-sm font-medium text-gray-900"
-                  >
-                    Confirm password
-                  </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                    {...register("confirmPassword")}
-                  />
-                  {errors.confirmPassword && (
-                    <span className="text-red-800 block mt-2">
-                      {errors.confirmPassword?.message}
-                    </span>
-                  )}
-                </div>
 
                 <button
                   type="submit"
                   className="w-full text-white bg-green-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  disabled={isSubmitting}
-                >
+                  disabled={isSubmitting}>
                   Register
                 </button>
               </form>
